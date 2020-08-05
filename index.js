@@ -124,10 +124,12 @@ app.get("/food/:id", (req, res) => {
     knex.select("*").from("food")
     .where("id", "=", id)
     .orderBy("added", "desc")
-    .then(food => res.json(food))
-    .catch(err => res.status(400).json({
+    .then(food => res.status(200).json(food))
+    .catch(err => {
+    res.status(400).json({
         message: "Error getting food"
-    }))
+    })
+})
 })
 
 const PORT = process.env.PORT || "3005"
