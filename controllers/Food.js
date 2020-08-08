@@ -25,24 +25,28 @@ const getAll = (req, res, knex) =>{
 }
 
 const updateFood = (req, res, knex) => {
-    const { id, imeJedi, tipJedi, postopek, sestavine } = req.body
+    const { id, imejedi, tipjedi, postopek, sestavine } = req.body
     knex("food").where("id", "=", id)
     .update({
-        imeJedi, tipJedi, postopek, sestavine
+        jed: imejedi,
+        tip: tipjedi, 
+        postopek,
+        sestavine
     })
     .then(response => res.json({
         message: "Succesfully updated!"
     }))
     .catch(err => res.status(400).json({
-        message: "Error with updating"
+        message: err.message
     }))
+    
+
 }
 
 const getFoodById = (req, res, knex) => {
     const {id} = req.params;
     knex.select("*").from("food")
     .where("id", "=", id)
-    .orderBy("added", "desc")
     .then(food => res.status(200).json(food))
     .catch(err => {
     res.status(400).json({
