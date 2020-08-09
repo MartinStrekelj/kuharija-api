@@ -10,10 +10,7 @@ const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex( {
   client: "pg",
-  connection: {
-    connectString: process.env.DATABASE_URL,
-    ssl:true,
-  }
+  connection: process.env.DATABASE_URL,
 });
 
 const app = express();
