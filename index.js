@@ -8,6 +8,7 @@ const { body, validationResult } = require('express-validator');
 const { signIn, register } = require("./controllers/User");
 const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food");
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex( {
   client: "pg",
   connection: {
