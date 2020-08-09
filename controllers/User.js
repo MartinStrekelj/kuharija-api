@@ -36,13 +36,16 @@ const register = (req, res, db, bcrypt) => {
                 .returning("*")
                 .then(user => {
                     return res.json({
-                        message: `User ${user[0].username} succesfully registered!`
+                        message: `User ${user[0].username} succesfully registered!`,
+                        id: user.id
                     })
                 })
                 .then(trx.commit)
             })
             .catch(trx.rollback)
-        }).catch(err => res.status(400).json(err))
+        }).catch(err => res.status(400).json({
+            message: "Napaka pri registraciji!"
+        }))
     }
 
 module.exports = {
