@@ -4,7 +4,6 @@ const morgan = require ("morgan")
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const knex = require("knex")
-const { body, validationResult } = require('express-validator');
 const { signIn, register } = require("./controllers/User");
 const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food");
 
