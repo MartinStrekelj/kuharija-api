@@ -1,7 +1,7 @@
 
 const saltRounds = 10;
 
-const signIn = (req, res, db, bcrypt, validationResult) => {
+const signIn = (req, res, db, bcrypt) => {
     const  { username , password } = req.body;
     db.select("*").from("login").where({username})
     .then(login => {
@@ -42,9 +42,7 @@ const register = (req, res, db, bcrypt) => {
                 .then(trx.commit)
             })
             .catch(trx.rollback)
-        }).catch(err => res.status(400).json({
-            message: "Unable to register with those credentials"
-        }))
+        }).catch(err => res.status(400).json(err))
     }
 
 module.exports = {
