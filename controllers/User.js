@@ -1,16 +1,12 @@
 
 const saltRounds = 10;
 
-const signIn = (req, res, knex, bcrypt, validationResult) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()){
-        return(res.status(400).json({ message: errors.array() }))
-    }else {
-        const  { username , password } = req.body;
-    knex.select("*").from("login").where({username})
+const signIn = (req, res, db, bcrypt, validationResult) => {
+    const  { username , password } = req.body;
+    db.select("*").from("login").where({username})
     .then(login => {
         if (bcrypt.compareSync(password, login[0].password)){
-            knex.select("*").from("users").where({username})
+            db.select("*").from("users").where({username})
             .then(user => res.json(user[0]));
         } else {
             res.status(400).json({
@@ -22,17 +18,11 @@ const signIn = (req, res, knex, bcrypt, validationResult) => {
         message: "User does not exist"
     }))
     }
-    
-}
 
-const register = (req, res, knex, bcrypt, validationResult) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()){
-        return(res.status(400).json({ message: errors.array() }))
-    } else{
+const register = (req, res, db, bcrypt) => {
         const { username , email, password} = req.body;
         const hash = bcrypt.hashSync(password, saltRounds);
-        knex.transaction(trx => {
+        db.transaction(trx => {
             trx.insert({
                 username,
                 password: hash
@@ -56,7 +46,6 @@ const register = (req, res, knex, bcrypt, validationResult) => {
             message: "Unable to register with those credentials"
         }))
     }
-}
 
 module.exports = {
     signIn: signIn,

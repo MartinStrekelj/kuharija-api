@@ -1,4 +1,4 @@
-const addFood = (req, res, knex) => {
+const addFood = (req, res, db) => {
     const { imejedi, tipjedi, postopek, sestavine } = req.body;
     const newDish = {
         jed: imejedi, 
@@ -7,7 +7,7 @@ const addFood = (req, res, knex) => {
         sestavine,
         added: new Date()
     }
-    knex.insert(newDish).into("food")
+    db.insert(newDish).into("food")
     .then(
         response => res.json({
             message: "Nov recept uspešno shranjen!"
@@ -18,17 +18,17 @@ const addFood = (req, res, knex) => {
     }))
 }
 
-const getAll = (req, res, knex) =>{
-    knex.select("*").from("food").orderBy("added", "desc")
+const getAll = (req, res, db) =>{
+    db.select("*").from("food").orderBy("added", "desc")
     .then(food => res.json(food))
     .catch(err => res.status(400).json({
         message: "Error getting food"
     }))
 }
 
-const updateFood = (req, res, knex) => {
+const updateFood = (req, res, db) => {
     const { id, imejedi, tipjedi, postopek, sestavine } = req.body
-    knex("food").where("id", "=", id)
+    db("food").where("id", "=", id)
     .update({
         jed: imejedi,
         tip: tipjedi, 
@@ -43,9 +43,9 @@ const updateFood = (req, res, knex) => {
     }))
 }
 
-const getFoodById = (req, res, knex) => {
+const getFoodById = (req, res, db) => {
     const {id} = req.params;
-    knex.select("*").from("food")
+    db.select("*").from("food")
     .where("id", "=", id)
     .then(food => res.status(200).json(food))
     .catch(err => {
