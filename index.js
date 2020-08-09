@@ -26,7 +26,8 @@ app.use(morgan("tiny"));
 // Endpoints
 app.get("/", (req,res) => {
   res.json({
-    message: "Server connected!"
+    message: "Server connected!",
+    db_url: process.env.DATABASE_URL
   })
   }
 )
