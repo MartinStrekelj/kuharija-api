@@ -11,7 +11,7 @@ const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food
 const db = knex( {
   client: "pg",
   connection: {
-    host: process.env.DATABASE_URL,
+    connectString: process.env.DATABASE_URL,
     ssl: true
   }
 });
@@ -24,7 +24,9 @@ app.use(morgan("tiny"));
 
 // Endpoints
 app.get("/", (req,res) => {
-  res.json(db("users").select("*"))
+  res.json({
+    message: "Server connected!"
+  })
   }
 )
 // User
