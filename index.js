@@ -28,7 +28,9 @@ app.use(function(req, res, next) {
   });
 
 // Endpoints
-
+app.get("/", (req,res) => res.json({
+  message: "It's working!"
+}))
 // User
 app.post("/signin", [body("username").trim().escape()],
  (req, res) => signIn(req,res, knex, bcrypt, validationResult))
