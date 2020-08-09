@@ -8,14 +8,12 @@ const { signIn, register } = require("./controllers/User");
 const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food");
 
 const knex = require("knex")( {
-    client: "pg",
-    connection: {
-    host : '127.0.0.1',
-    user : 'postgres',
-    password : 'test',
-    database : 'kuharija'
-    }
-  });
+  client: "pg",
+  connection: {
+    connectionString : process.env.DATABASE_URL,
+    ssl: true
+  }
+});
 
 const app = express();
 // Middleware
