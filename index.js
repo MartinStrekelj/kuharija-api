@@ -30,9 +30,9 @@ app.get("/", (req,res) => res.json({
   message: "It's working!"
 }))
 // User
-app.post("/signin", [body("username").trim().escape()],
+app.post("/signin",
  (req, res) => signIn(req,res, knex, bcrypt, validationResult))
-app.post("/register", [body("username").trim().escape(), body("email").isEmail()],
+app.post("/register",
  (req, res) => register(req, res, knex, bcrypt, validationResult))
 
 // Food
