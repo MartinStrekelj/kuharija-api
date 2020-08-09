@@ -20,15 +20,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("tiny"));
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 
 // Endpoints
-app.get("/", (req,res) => res.json({
-  message: "It's working!"
-}))
+app.get("/", (req,res) => {
+  res.json(knex("users").select("*"))
+  }
+)
 // User
 app.post("/signin",
  (req, res) => signIn(req,res, knex, bcrypt, validationResult))
