@@ -13,7 +13,9 @@ const addFood = (req, res, knex) => {
             message: "Nov recept uspešno shranjen!"
         })
     )
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.status(400).json({
+        message: "Napaka pri shranjevanju novega recepta."
+    }))
 }
 
 const getAll = (req, res, knex) =>{
@@ -39,8 +41,6 @@ const updateFood = (req, res, knex) => {
     .catch(err => res.status(400).json({
         message: err.message
     }))
-    
-
 }
 
 const getFoodById = (req, res, knex) => {

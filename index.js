@@ -3,6 +3,7 @@ const cors = require ("cors")
 const morgan = require ("morgan")
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const { body, validationResult } = require('express-validator');
 const { signIn, register } = require("./controllers/User");
 const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food");
 
@@ -29,8 +30,10 @@ app.use(function(req, res, next) {
 // Endpoints
 
 // User
-app.post("/signin", (req, res) => signIn(req,res, knex, bcrypt))
-app.post("/register", (req, res) => register(req, res, knex, bcrypt))
+app.post("/signin", [body("username").trim().escape()],
+ (req, res) => signIn(req,res, knex, bcrypt, validationResult))
+app.post("/register", [body("username").trim().escape(), body("email").isEmail()],
+ (req, res) => register(req, res, knex, bcrypt, validationResult))
 
 // Food
 app.get("/food", (req, res) => getAll(req, res, knex))
