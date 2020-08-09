@@ -7,13 +7,12 @@ const knex = require("knex")
 const { signIn, register } = require("./controllers/User");
 const { getAll, getFoodById, addFood, updateFood } = require("./controllers/Food");
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex( {
   client: "pg",
   connection: {
+    connectString: process.env.DATABASE_URL,
     ssl:true,
-    host: process.env.DATABASE_URL,
-    connectString: process.env.DATABASE_URL
   }
 });
 
