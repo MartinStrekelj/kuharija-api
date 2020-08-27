@@ -36,7 +36,7 @@ const updateFood = (req, res, db) => {
         sestavine
     })
     .then(response => res.json({
-        message: "Succesfully updated!"
+        message: "Uspešno posodobljen recept!"
     }))
     .catch(err => res.status(400).json({
         message: err.message
